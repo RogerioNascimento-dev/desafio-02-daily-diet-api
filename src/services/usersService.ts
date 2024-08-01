@@ -1,5 +1,5 @@
 import { knex } from '../configs/database'
-import { RegisterRequest } from '../validators/usersValidator'
+import { LoginRequest, RegisterRequest } from '../validators/usersValidator'
 import bcrypt from 'bcrypt'
 import { randomUUID } from 'node:crypto'
 const SALT_ROUNDS = 10
@@ -25,4 +25,9 @@ export async function registerOrFail(payload: RegisterRequest) {
     .returning(['id', 'first_name', 'last_name', 'email'])
 
   return createdUser[0]
+}
+
+export const loginOrFail = (payload: LoginRequest) => {
+  console.log(payload)
+  return true
 }
