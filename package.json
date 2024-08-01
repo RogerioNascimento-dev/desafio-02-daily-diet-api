@@ -1,0 +1,24 @@
+{
+  "name": "desafio-02-daily-diet-api",
+  "version": "1.0.0",
+  "description": "Desafio referente ao módulo: Criando APIs RESTfull com Node.js",
+  "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "lint": "eslint src --ext .ts --fix"
+  },
+  "keywords": [],
+  "author": "Rogério Nascimento",
+  "license": "ISC",
+  
+  "devDependencies": {
+    "@types/node": "^22.0.2",
+    "eslint": "^8.57.0",
+    "@rocketseat/eslint-config": "^2.2.2", 
+    "tsx": "^4.16.3",
+    "typescript": "^5.5.4"
+  }
+}
