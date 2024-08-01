@@ -5,4 +5,5 @@ export const envValidator = z.object({
   DATABASE_URL: z.string(),
   DATABASE_CLIENT: z.enum(['pg', 'sqlite']).default('sqlite'),
   PORT: z.coerce.number().default(3333),
+  JWT_SECRET: z.string(),
 })
