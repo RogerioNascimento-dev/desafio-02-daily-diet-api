@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/bootstrap.ts",
     "lint": "eslint src --ext .ts --fix"
   },
   "keywords": [],
