@@ -4,22 +4,22 @@ import bcrypt from 'bcrypt'
 import { randomUUID } from 'node:crypto'
 const SALT_ROUNDS = 10
 
-export async function registerOrFail(payload: RegisterRequest) {
+export async function registerOrFail(request: RegisterRequest) {
   const user = await knex('users')
-    .where({ email: payload.email })
+    .where({ email: request.email })
     .select()
     .first()
 
   if (user) throw new Error('E-mail already registred!')
 
-  const passwordHash = bcrypt.hashSync(payload.password, SALT_ROUNDS)
+  const passwordHash = bcrypt.hashSync(request.password, SALT_ROUNDS)
 
   const createdUser = await knex('users')
     .insert({
       id: randomUUID(),
-      first_name: payload.firstName,
-      last_name: payload.lastName,
-      email: payload.email,
+      first_name: request.firstName,
+      last_name: request.lastName,
+      email: request.email,
       password: passwordHash,
     })
     .returning(['id', 'first_name', 'last_name', 'email'])
@@ -27,7 +27,19 @@ export async function registerOrFail(payload: RegisterRequest) {
   return createdUser[0]
 }
 
-export const loginOrFail = (payload: LoginRequest) => {
-  console.log(payload)
-  return true
+export const loginOrFail = async (request: LoginRequest) => {
+  const user = await knex('users')
+    .where({ email: request.email })
+    .select()
+    .first()
+
+  if (!user) throw new Error('Invalid email or password!')
+
+  const passwordIsCorrect = await bcrypt.compare(
+    request.password,
+    user.password,
+  )
+  if (!passwordIsCorrect) throw new Error('Invalid email or password!')
+
+  return { id: user.id, email: user.email, name: user.first_name }
 }
