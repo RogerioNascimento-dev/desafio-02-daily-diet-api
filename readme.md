@@ -4,7 +4,7 @@
 #
 ### Features
 
-- 🟨 Criação de usuário
+- ✅ Criação de usuário
 - 🟨 Login de usuário
 - 🟨 Criação de refeição
 - 🟨 Edição de refeição

@@ -11,6 +11,7 @@ const connection =
 export const config: Knex.Config = {
   client: env.DATABASE_CLIENT,
   connection,
+  useNullAsDefault: true,
   migrations: {
     extension: 'ts',
     directory: './database/migrations',
