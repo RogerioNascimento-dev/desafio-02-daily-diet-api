@@ -1,5 +1,10 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { loginRequest, registerRequest } from '../validators/usersValidator'
+import {
+  LoginRequest,
+  loginRequest,
+  RegisterRequest,
+  registerRequest,
+} from '../validators/usersValidator'
 import { registerOrFail, loginOrFail } from '../services/usersService'
 
 export const register = async (
@@ -7,7 +12,7 @@ export const register = async (
   reply: FastifyReply,
 ) => {
   try {
-    const body = registerRequest.parse(request.body)
+    const body = registerRequest.parse(request.body) as RegisterRequest
     const user = await registerOrFail(body)
 
     return reply.status(201).send({ user })
@@ -21,7 +26,7 @@ export const register = async (
 
 export const login = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
-    const body = loginRequest.parse(request.body)
+    const body = loginRequest.parse(request.body) as LoginRequest
     const payload = await loginOrFail(body)
 
     const token = request.jwt.sign(payload)

@@ -5,8 +5,9 @@
 ### Features
 
 - ✅ Criação de usuário
-- 🟨 Login de usuário
-- 🟨 Criação de refeição
+- ✅ Login de usuário
+- ✅ Logout de usuário
+- ✅ Criação de refeição
 - 🟨 Edição de refeição
 - 🟨 Atualização de refeição
 - 🟨 Exclusão de refeição

@@ -1,7 +1,5 @@
 // eslint-disable-next-line
 import { Knex } from 'knex'
-// eslint-disable-next-line
-import { JWT } from '@fastify/jwt'
 
 declare module 'knex/types/tables' {
   export interface Tables {
@@ -11,12 +9,17 @@ declare module 'knex/types/tables' {
       last_name: ?string
       email: string
       password: string
+      best_sequence: number
       created_at: string
     }
-  }
-}
-declare module 'fastify' {
-  interface FastifyRequest {
-    jwt: JWT
+    meals: {
+      id: string
+      fk_user_id: string
+      name: string
+      description: ?string
+      date: string
+      time: string
+      is_diet: boolean
+    }
   }
 }

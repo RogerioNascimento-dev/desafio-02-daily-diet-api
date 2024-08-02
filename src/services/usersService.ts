@@ -4,6 +4,12 @@ import bcrypt from 'bcrypt'
 import { randomUUID } from 'node:crypto'
 const SALT_ROUNDS = 10
 
+export interface userPayloadJwt {
+  id: string
+  email: string
+  name: string
+}
+
 export async function registerOrFail(request: RegisterRequest) {
   const user = await knex('users')
     .where({ email: request.email })
@@ -27,7 +33,9 @@ export async function registerOrFail(request: RegisterRequest) {
   return createdUser[0]
 }
 
-export const loginOrFail = async (request: LoginRequest) => {
+export const loginOrFail = async (
+  request: LoginRequest,
+): Promise<userPayloadJwt> => {
   const user = await knex('users')
     .where({ email: request.email })
     .select()

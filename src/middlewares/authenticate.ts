@@ -1,4 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
+import { userPayloadJwt } from '../services/usersService'
 
 export const authenticate = async (
   request: FastifyRequest,
@@ -10,4 +11,6 @@ export const authenticate = async (
     return reply
       .status(401)
       .send({ message: 'Unauthorized, authentication required.' })
+
+  request.authUser = request.jwt.verify(token) as userPayloadJwt
 }
