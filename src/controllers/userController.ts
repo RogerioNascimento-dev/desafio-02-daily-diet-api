@@ -41,3 +41,8 @@ export const login = async (request: FastifyRequest, reply: FastifyReply) => {
     return reply.status(401).send({ message: 'An unknown error occurred' })
   }
 }
+
+export const logout = async (request: FastifyRequest, reply: FastifyReply) => {
+  reply.clearCookie('access_token')
+  return reply.send({ message: 'Logout successful' })
+}
