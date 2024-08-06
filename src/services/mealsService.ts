@@ -100,3 +100,34 @@ export const deleteOrFail = async (mealId: string, user?: userPayloadJwt) => {
     })
     .delete()
 }
+
+export const getMetricsOrFail = async (user?: userPayloadJwt) => {
+  const meals = await knex('meals')
+    .where({
+      fk_user_id: user?.id,
+    })
+    .select()
+    .orderBy('date', 'asc')
+
+  const onDiet = meals.filter((m) => m.is_diet).length
+  const offDiet = meals.filter((m) => !m.is_diet).length
+
+  const { bestOnDietSequence } = meals.reduce(
+    (acc, meal) => {
+      if (meal.is_diet) {
+        acc.currentSequence += 1
+      } else {
+        acc.currentSequence = 0
+      }
+
+      if (acc.currentSequence > acc.bestOnDietSequence) {
+        acc.bestOnDietSequence = acc.currentSequence
+      }
+
+      return acc
+    },
+    { bestOnDietSequence: 0, currentSequence: 0 },
+  )
+
+  return { total: meals.length, onDiet, offDiet, bestOnDietSequence }
+}

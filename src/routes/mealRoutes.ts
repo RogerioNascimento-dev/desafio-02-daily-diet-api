@@ -5,6 +5,7 @@ import {
   update,
   find,
   deleteMeal,
+  metrics,
 } from '../controllers/mealController'
 import { authenticate } from '../middlewares/authenticate'
 
@@ -14,4 +15,5 @@ export async function mealRoutes(app: FastifyInstance) {
   app.put('/:id', { preHandler: [authenticate] }, update)
   app.get('/:id', { preHandler: [authenticate] }, find)
   app.delete('/:id', { preHandler: [authenticate] }, deleteMeal)
+  app.get('/metrics', { preHandler: [authenticate] }, metrics)
 }

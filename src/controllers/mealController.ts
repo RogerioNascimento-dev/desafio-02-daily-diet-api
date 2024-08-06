@@ -15,6 +15,7 @@ import {
   updateOrFail,
   findOrFail,
   deleteOrFail,
+  getMetricsOrFail,
 } from '../services/mealsService'
 
 export const create = async (request: FastifyRequest, reply: FastifyReply) => {
@@ -92,6 +93,21 @@ export const deleteMeal = async (
     await deleteOrFail(mealId, authUser)
 
     return reply.status(200).send('Delete success!')
+  } catch (e) {
+    if (e instanceof Error)
+      return reply.status(400).send({ message: e.message })
+
+    return reply.status(500).send({ message: 'An unknown error occurred' })
+  }
+}
+
+export const metrics = async (request: FastifyRequest, reply: FastifyReply) => {
+  try {
+    const authUser = request.authUser
+
+    const metrics = await getMetricsOrFail(authUser)
+
+    return reply.status(200).send({ metrics })
   } catch (e) {
     if (e instanceof Error)
       return reply.status(400).send({ message: e.message })
