@@ -2,6 +2,7 @@ import { knex } from '../configs/database'
 import {
   CreateMealRequest,
   ListMealRequest,
+  UpdateMealRequest,
 } from '../validators/mealsValidator'
 import { randomUUID } from 'node:crypto'
 import { userPayloadJwt } from './usersService'
@@ -22,7 +23,7 @@ export async function createOrFail(
       description: request.description,
       date: request.date,
       time: request.time,
-      is_diet: request.isDiet,
+      is_diet: request.is_diet,
     })
     .returning([
       'id',
@@ -34,7 +35,7 @@ export async function createOrFail(
       'is_diet',
     ])
 
-  const bestSequence = request.isDiet ? user.best_sequence + 1 : 0
+  const bestSequence = request.is_diet ? user.best_sequence + 1 : 0
 
   await knex('users')
     .where({ id: user.id })
@@ -45,10 +46,10 @@ export async function createOrFail(
 
 export async function listOrFail(
   queryParams: ListMealRequest,
-  authUser?: userPayloadJwt,
+  user?: userPayloadJwt,
 ) {
   const meals = await knex('meals')
-    .where({ fk_user_id: authUser?.id })
+    .where({ fk_user_id: user?.id })
     .modify((queryBuilder) => {
       if (queryParams.name) {
         queryBuilder.where('name', 'like', `%${queryParams.name}%`)
@@ -66,4 +67,36 @@ export async function listOrFail(
     .orderBy('date', 'desc')
 
   return meals
+}
+
+export const updateOrFail = async (
+  mealId: string,
+  payload: UpdateMealRequest,
+  user?: userPayloadJwt,
+) => {
+  await knex('meals')
+    .where({
+      id: mealId,
+      fk_user_id: user?.id,
+    })
+    .update(payload)
+}
+
+export const findOrFail = async (mealId: string, user?: userPayloadJwt) => {
+  const meal = await knex('meals')
+    .where({
+      id: mealId,
+      fk_user_id: user?.id,
+    })
+    .select()
+
+  return meal[0]
+}
+export const deleteOrFail = async (mealId: string, user?: userPayloadJwt) => {
+  await knex('meals')
+    .where({
+      id: mealId,
+      fk_user_id: user?.id,
+    })
+    .delete()
 }

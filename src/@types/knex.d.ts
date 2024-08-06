@@ -15,11 +15,11 @@ declare module 'knex/types/tables' {
     meals: {
       id: string
       fk_user_id: string
-      name: string
+      name: ?string
       description: ?string
-      date: string
-      time: string
-      is_diet: boolean
+      date: ?string
+      time: ?string
+      is_diet: ?boolean
     }
   }
 }

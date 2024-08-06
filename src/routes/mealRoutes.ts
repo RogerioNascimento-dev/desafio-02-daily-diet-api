@@ -1,8 +1,17 @@
 import { FastifyInstance } from 'fastify'
-import { create, list } from '../controllers/mealController'
+import {
+  create,
+  list,
+  update,
+  find,
+  deleteMeal,
+} from '../controllers/mealController'
 import { authenticate } from '../middlewares/authenticate'
 
 export async function mealRoutes(app: FastifyInstance) {
   app.post('/', { preHandler: [authenticate] }, create)
   app.get('/', { preHandler: [authenticate] }, list)
+  app.put('/:id', { preHandler: [authenticate] }, update)
+  app.get('/:id', { preHandler: [authenticate] }, find)
+  app.delete('/:id', { preHandler: [authenticate] }, deleteMeal)
 }
