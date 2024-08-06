@@ -8,10 +8,11 @@
 - ✅ Login de usuário
 - ✅ Logout de usuário
 - ✅ Criação de refeição
-- 🟨 Edição de refeição
-- 🟨 Atualização de refeição
-- 🟨 Exclusão de refeição
-- 🟨 Listar todas as refeições do usuário
+- ✅ Edição de refeição
+- ✅ Atualização de refeição
+- ✅ Exclusão de refeição
+- ✅ Listar todas as refeições do usuário
+- ✅ visualizar uma refeições específica do usuário
 - 🟨 Recuperar métricas de todas as refeições do usuário
 
 #### Sumário
